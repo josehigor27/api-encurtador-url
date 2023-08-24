@@ -8,5 +8,5 @@ import java.util.ArrayList;
 
 @Repository
 public interface HashRepository extends JpaRepository<HashModel, String> {
-    public ArrayList<HashModel> findAllByAvailable(boolean isAvailable);
+    public ArrayList<HashModel> findAllByIsAvailable(boolean isAvailable);
 }

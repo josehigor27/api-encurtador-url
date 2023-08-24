@@ -31,7 +31,7 @@ public class HashService {
 
     public HashModel getOneHash() {
         List<HashModel> hashModelList = new ArrayList<>();
-        hashModelList = hashRepository.findAllByAvailable(true);
+        hashModelList = hashRepository.findAllByIsAvailable(true);
 
         if (!hashModelList.isEmpty()) {
             hashModelList.get(0).setAvailable(false);
