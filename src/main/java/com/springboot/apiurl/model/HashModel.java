@@ -11,6 +11,8 @@ public class HashModel {
     private String hash;
     private boolean isAvailable;
 
+
+
     public String getHash() {
         return hash;
     }
