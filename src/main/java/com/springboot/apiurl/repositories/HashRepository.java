@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 
+@Deprecated
 @Repository
 public interface HashRepository extends JpaRepository<HashModel, String> {
-    public ArrayList<HashModel> findAllByIsAvailable(boolean isAvailable);
+
 }

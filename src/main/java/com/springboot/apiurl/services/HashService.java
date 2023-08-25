@@ -1,7 +1,6 @@
 package com.springboot.apiurl.services;
 
 import com.springboot.apiurl.model.HashModel;
-import com.springboot.apiurl.model.UrlModel;
 import com.springboot.apiurl.repositories.HashRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,39 +9,55 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 import static com.springboot.apiurl.services.HashGenerator.generateSetString;
+import static com.springboot.apiurl.services.HashGenerator.generateUniqueString;
 
+@Deprecated
 @Service
 public class HashService {
     @Autowired
     private HashRepository hashRepository;
 
-    @Transactional
-    public void saveHash() {
-        var hashModel = new HashModel();
-        Set<String> hashList = new HashSet<>();
-        hashList = generateSetString();
 
-        for (String hash : hashList) {
-            hashModel.setHash(hash);
+    public HashModel saveHash() {
+        try{
+            var hashModel = new HashModel();
+            //Set<String> hashList = new HashSet<>();
+            //hashList = generateSetString();
+            String aux = generateUniqueString();
+
+            hashModel.setHash(aux);
             hashModel.setAvailable(true);
-            hashRepository.save(hashModel);
+            System.out.println(hashModel.toString());
+
+
+            return hashRepository.save(hashModel);
+        }catch (IllegalArgumentException ex){
+            System.out.println(ex);
         }
+        return null;
     }
 
-    public HashModel getOneHash() {
-        List<HashModel> hashModelList = new ArrayList<>();
-        hashModelList = hashRepository.findAllByIsAvailable(true);
+    public String getOneHash() {
 
-        if (!hashModelList.isEmpty()) {
-            hashModelList.get(0).setAvailable(false);
-            hashRepository.save(hashModelList.get(0));
-            return hashModelList.get(0);
-        } else {
-            saveHash();
-            getOneHash();
-        }
 
-        return null;
+//        List<HashModel> hashModelList = new ArrayList<HashModel>();
+//        hashModelList = hashRepository.findAll();
+//        hashModelList.removeIf(n->n.isAvailable()==false);
+//
+//        if (!hashModelList.isEmpty()) {
+//
+//            hashModelList.get(0).setAvailable(false);
+//            hashRepository.save(hashModelList.get(0));
+//            return hashModelList.get(0);
+//        } else {
+//            saveHash();
+//            getOneHash();
+//        }
+
+
+        String hash = generateUniqueString();
+
+        return hash;
     }
 
 

@@ -7,7 +7,7 @@ import java.util.Set;
 public class HashGenerator {
     private static final String CHARACTERES = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@";
     private static final int STRING_LENGTH = 7;
-    private static final String URL = "bit.ly/";
+    //private static final String URL = "bit.ly/";
     private static final int QTD_HASH = 20;
 
     public static String generateUniqueString(){
@@ -18,7 +18,7 @@ public class HashGenerator {
             char randomChar = CHARACTERES.charAt(randomIndex);
             sb.append(randomChar);
         }
-        return URL+sb.toString();
+        return sb.toString();
     }
 
     public static Set<String> generateSetString(){

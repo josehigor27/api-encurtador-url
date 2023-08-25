@@ -11,40 +11,37 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.springboot.apiurl.services.HashGenerator.generateUniqueString;
+
 @Service
-public class UrlService{
+public class UrlService {
     @Autowired
     private UrlRepository urlRepository;
 
 
-    private HashService hashService;
-
     @Transactional
-    public UrlModel saveUrl(UrlModel urlModel){
-        try{
-            urlModel.setHash(hashService.getOneHash().getHash());
+    public String saveUrl(UrlModel urlModel) {
+        try {
+            String hashValid;
+            boolean isExist;
+            do {
+                hashValid = generateUniqueString();
+                isExist = urlRepository.findByHashContaining(hashValid).isEmpty();
+            }while(isExist == false);
+            urlModel.setHash(hashValid);
             urlModel.setDataTime(LocalDate.now());
-            return urlRepository.save(urlModel);
-        }catch (IllegalArgumentException ex){
+            return urlRepository.save(urlModel).getHash();
+        } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
 
         }
         return null;
     }
 
-    public ArrayList<UrlModel> getAllUrl(){
-        try{
-            return (ArrayList<UrlModel>) urlRepository.findAll();
-        }catch (IllegalArgumentException ex){
-            System.out.println(ex.getMessage());
-        }
-        return null;
-    }
-
-    public Optional<UrlModel> getUrlById(UUID uuid){
-        try{
-            return urlRepository.findById(uuid);
-        }catch (IllegalArgumentException ex){
+    public Optional<UrlModel> getUrlByHash(String hash) {
+        try {
+            return urlRepository.findByHashContaining(hash);
+        } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
         return null;

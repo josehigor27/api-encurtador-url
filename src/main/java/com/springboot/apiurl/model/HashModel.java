@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@Deprecated
 @Entity
 @Table(name = "tbl_hash")
 public class HashModel {
@@ -11,7 +12,13 @@ public class HashModel {
     private String hash;
     private boolean isAvailable;
 
-
+    @Override
+    public String toString() {
+        return "HashModel{" +
+                "hash='" + hash + '\'' +
+                ", isAvailable=" + isAvailable +
+                '}';
+    }
 
     public String getHash() {
         return hash;
